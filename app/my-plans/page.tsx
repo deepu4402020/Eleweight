@@ -1,4 +1,4 @@
-import Navbar from '../../components/Navbar';
+import Navbar from '../components/Navbar';
 
 export default function MyPlansPage() {
   return (
@@ -14,4 +14,3 @@ export default function MyPlansPage() {
     </div>
   );
 }
-

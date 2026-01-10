@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../components/Navbar';
 
 export default function FindGymsPage() {
   const [radius, setRadius] = useState(1500);
@@ -53,4 +53,3 @@ export default function FindGymsPage() {
     </div>
   );
 }
-

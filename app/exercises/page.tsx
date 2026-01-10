@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Navbar from '../../components/Navbar';
+import Navbar from '../components/Navbar';
 
 const exercises = [
   { id: 1, name: 'Bench Press', muscleGroup: 'Chest', description: 'Lie back on flat bench, hold the barbell with a shoulder-width grip.', targetArea: 'Chest' },
@@ -63,4 +63,3 @@ export default function ExercisesPage() {
     </div>
   );
 }
-
