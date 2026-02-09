@@ -5,6 +5,7 @@ import { hashPassword, signAuthToken } from "@/lib/auth";
 import { validateRegisterPayload } from "@/lib/validators";
 
 export async function POST(request: NextRequest) {
+  console.log("POST req received");
   try {
     await connectDB();
 

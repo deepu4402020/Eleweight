@@ -16,6 +16,8 @@ export async function PUT(request: NextRequest) {
     }
 
     const validation = validateProfileUpdatePayload(body);
+    //	Validates it (shape, types, required fields, rules)
+	 //	Returns an object describing whether the data is valid
     if (!validation.success) {
       return NextResponse.json(
         { message: "Validation failed", errors: validation.errors },

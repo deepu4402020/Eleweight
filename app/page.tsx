@@ -38,8 +38,11 @@ export default function Home() {
 
           <div className="bg-gray-200 rounded-lg aspect-square flex items-center justify-center">
             <div className="text-center">
-              <div className="text-8xl mb-4">💪</div>
-              <p className="text-gray-500">Fitness Illustration</p>
+                        
+            <a href="/get-started" className="block relative h-screen">
+              <img src="/hero.jpg" alt="Hero" className="h-full w-full object-cover" />
+            </a>
+
             </div>
           </div>
         </div>

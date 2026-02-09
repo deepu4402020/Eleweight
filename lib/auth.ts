@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { NextRequest } from "next/server";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET as string;
 const DEFAULT_SALT_ROUNDS = Number(process.env.SALT_ROUNDS ?? 10);
 
 if (!JWT_SECRET) {
@@ -19,12 +19,20 @@ export async function hashPassword(plainPassword: string) {
   return bcrypt.hash(plainPassword, DEFAULT_SALT_ROUNDS);
 }
 
-export async function comparePassword(plainPassword: string, hashedPassword: string) {
+export async function comparePassword(
+  plainPassword: string,
+  hashedPassword: string
+) {
   return bcrypt.compare(plainPassword, hashedPassword);
 }
 
-export function signAuthToken(payload: AuthTokenPayload, expiresIn = "1h") {
-  return jwt.sign(payload, JWT_SECRET, { expiresIn });
+export function signAuthToken(
+  payload: AuthTokenPayload,
+  expiresIn: string | number = "1h"
+) {
+  return jwt.sign(payload, JWT_SECRET, {
+    expiresIn: expiresIn as jwt.SignOptions["expiresIn"],
+  });
 }
 
 export function verifyAuthToken(token: string) {
@@ -33,6 +41,7 @@ export function verifyAuthToken(token: string) {
 
 export function getUserFromRequest(request: NextRequest) {
   const header = request.headers.get("authorization");
+
   if (!header || !header.startsWith("Bearer ")) {
     throw new Error("Missing or invalid Authorization header");
   }
