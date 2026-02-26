@@ -7,7 +7,7 @@ export default function FindGymsPage() {
   const [radius, setRadius] = useState(1500);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen m-4 bg-white">
       <Navbar />
       
       <div className="bg-purple-600 text-white py-16">
