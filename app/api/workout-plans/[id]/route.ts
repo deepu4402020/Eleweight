@@ -38,10 +38,13 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
+// ...existing code...
 
-export async function PUT(request: NextRequest, { params }: RouteParams) {
+export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
-    if (!params?.id || !Types.ObjectId.isValid(params.id)) {
+    const { id } = await context.params; // Await the params
+    
+    if (!id || !Types.ObjectId.isValid(id)) {
       return invalidIdResponse();
     }
 
@@ -62,7 +65,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     }
 
     const updatedPlan = await WorkoutPlanModel.findOneAndUpdate(
-      { _id: params.id, userId: authUser.userId },
+      { _id: id, userId: authUser.userId },
       validation.data,
       { new: true }
     ).lean();
@@ -78,9 +81,11 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   try {
-    if (!params?.id || !Types.ObjectId.isValid(params.id)) {
+    const { id } = await context.params; // Await the params
+    
+    if (!id || !Types.ObjectId.isValid(id)) {
       return invalidIdResponse();
     }
 
@@ -88,7 +93,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     const authUser = getUserFromRequest(request);
 
     const deletedPlan = await WorkoutPlanModel.findOneAndDelete({
-      _id: params.id,
+      _id: id,
       userId: authUser.userId,
     }).lean();
 
