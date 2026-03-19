@@ -5,9 +5,6 @@ import { connectDB } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/auth";
 import { validateWorkoutPlanPayload } from "@/lib/validators";
 
-interface RouteParams {
-  params: { id: string };
-}
 
 function invalidIdResponse() {
   return NextResponse.json({ message: "Invalid workout plan id" }, { status: 400 });
