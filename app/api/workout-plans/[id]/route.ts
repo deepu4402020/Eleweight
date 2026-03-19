@@ -5,7 +5,6 @@ import { connectDB } from "@/lib/db";
 import { getUserFromRequest } from "@/lib/auth";
 import { validateWorkoutPlanPayload } from "@/lib/validators";
 
-
 function invalidIdResponse() {
   return NextResponse.json({ message: "Invalid workout plan id" }, { status: 400 });
 }
@@ -17,14 +16,20 @@ function handleAuthError(error: unknown) {
   return NextResponse.json({ message: "Internal server error" }, { status: 500 });
 }
 
-
-export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+export async function GET(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
+    const { id } = await context.params;
+
+    if (!id || !Types.ObjectId.isValid(id)) {
+      return invalidIdResponse();
+    }
+
     await connectDB();
 
-    const { id } = await context.params; // Await the params
-
-    const workoutPlan = await WorkoutPlanModel.findById(id);
+    const workoutPlan = await WorkoutPlanModel.findById(id).lean();
     if (!workoutPlan) {
       return NextResponse.json({ message: "Workout plan not found" }, { status: 404 });
     }
@@ -35,12 +40,14 @@ export async function GET(request: NextRequest, context: { params: Promise<{ id:
     return NextResponse.json({ message: "Internal server error" }, { status: 500 });
   }
 }
-// ...existing code...
 
-export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+export async function PUT(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = await context.params; // Await the params
-    
+    const { id } = await context.params;
+
     if (!id || !Types.ObjectId.isValid(id)) {
       return invalidIdResponse();
     }
@@ -73,15 +80,18 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
 
     return NextResponse.json(updatedPlan);
   } catch (error) {
-    console.error("Update workout plan error", error);
+    console.error("Update workout plan error:", error);
     return handleAuthError(error);
   }
 }
 
-export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const { id } = await context.params; // Await the params
-    
+    const { id } = await context.params;
+
     if (!id || !Types.ObjectId.isValid(id)) {
       return invalidIdResponse();
     }
@@ -100,7 +110,7 @@ export async function DELETE(request: NextRequest, context: { params: Promise<{ 
 
     return NextResponse.json({ message: "Workout plan deleted successfully" });
   } catch (error) {
-    console.error("Delete workout plan error", error);
+    console.error("Delete workout plan error:", error);
     return handleAuthError(error);
   }
 }
