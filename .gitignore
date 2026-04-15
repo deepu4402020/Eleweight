@@ -4,8 +4,9 @@
 .env
 
 .cursor
-
+ 
 # dependencies
+
 /node_modules
 /.pnp
 .pnp.*

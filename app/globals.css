@@ -1,25 +1,146 @@
 @import "tailwindcss";
 
+/* ════════════════════════════════════════
+   DESIGN TOKENS — High-Fidelity Monochrome
+   Strict Black, White, and Zinc system
+   Light mode is DEFAULT
+   ════════════════════════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary-purple: #8b5cf6;
-  --primary-purple-dark: #7c3aed;
+  /* Light mode — Pure & Minimal */
+  --background:        #FFFFFF;
+  --foreground:        #000000;
+  --surface:           #FFFFFF;
+  --surface-2:         #FBFBFB;
+  --surface-3:         #F5F5F5;
+  --surface-dark:      #000000;
+  --muted:             #525252;
+  --muted-light:       #A3A3A3;
+  --border:            #E5E5E5;
+  --border-dark:       #262626;
+  --accent:            #000000;
+  --accent-fg:         #FFFFFF;
+  --subtle:            #F9F9F9;
+  
+  /* Functional */
+  --danger:            #000000; /* Monochrome approach: use weight/borders for errors */
+  --danger-bg:         #FFFFFF;
+  --danger-border:     #000000;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Dark mode — Deep & Sophisticated */
+html[data-theme="dark"] {
+  --background:        #000000;
+  --foreground:        #FFFFFF;
+  --surface:           #000000;
+  --surface-2:         #0A0A0A;
+  --surface-3:         #171717;
+  --surface-dark:      #FFFFFF;
+  --muted:             #A3A3A3;
+  --muted-light:       #525252;
+  --border:            #262626;
+  --border-dark:       #E5E5E5;
+  --accent:            #FFFFFF;
+  --accent-fg:         #000000;
+  --subtle:            #111111;
 }
+
+/* ── Tailwind bridge ── */
+@theme inline {
+  --color-background:   var(--background);
+  --color-foreground:   var(--foreground);
+  --color-surface:      var(--surface);
+  --color-muted:        var(--muted);
+  --color-border:       var(--border);
+  --color-accent:       var(--accent);
+  
+  --font-display:       var(--font-playfair);
+  --font-sans:          var(--font-inter);
+  --font-mono:          var(--font-dm-mono);
+}
+
+/* ════════════════════════════════════════
+   BASE
+   ════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  background:              var(--background);
+  color:                   var(--foreground);
+  font-family:             var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
+::selection {
+  background-color: var(--foreground);
+  color:            var(--background);
 }
+
+/* ════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   ════════════════════════════════════════ */
+.font-display { font-family: var(--font-playfair), Georgia, serif; }
+.font-sans    { font-family: var(--font-inter), system-ui, sans-serif; }
+.font-mono    { font-family: var(--font-dm-mono), 'Courier New', monospace; }
+
+/* ════════════════════════════════════════
+   MODERN UI UTILITIES
+   ════════════════════════════════════════ */
+.glass {
+  background: rgba(var(--background), 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.border-subtle { border: 1px solid var(--border); }
+.border-strong { border: 1px solid var(--border-dark); }
+
+.bw-image {
+  filter: grayscale(100%) contrast(1.1);
+  transition: filter 0.5s ease;
+}
+.bw-image:hover {
+  filter: grayscale(0%) contrast(1.0);
+}
+
+/* ════════════════════════════════════════
+   ANIMATIONS
+   ════════════════════════════════════════ */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 32s linear infinite; will-change: transform; }
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+.animate-float { animation: floatY 5s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up { animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+.animate-pulse-dot { animation: pulseDot 2s ease-in-out infinite; }
+
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(10,10,10,0); }
+  50%       { box-shadow: 0 0 20px 2px rgba(10,10,10,0.12); }
+}
+.animate-glow { animation: borderGlow 3s ease-in-out infinite; }
+
+/* ════════════════════════════════════════
+   SCROLLBAR
+════════════════════════════════════════ */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--background); }
+::-webkit-scrollbar-thumb { background: var(--border-dark); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }

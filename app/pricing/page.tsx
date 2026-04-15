@@ -3,59 +3,62 @@
 import { useState } from "react";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { Check, Minus } from "lucide-react";
+import { motion } from "framer-motion";
+import SectionLabel from "../components/SectionLabel";
 
 const plans = [
   {
-    badge: "Starter",
+    badge: "Base",
     name: "Essentials",
-    desc: "Perfect for solo trainers getting started with AI tools.",
+    desc: "Essential protocols for the dedicated beginner.",
     monthly: 19,
     annual: 14,
     features: [
-      { text: "1 AI trainer profile", included: true },
-      { text: "Up to 10 clients", included: true },
-      { text: "Smart workout builder", included: true },
-      { text: "Progress analytics", included: true },
-      { text: "Custom branding", included: false },
-      { text: "API access", included: false },
+      { text: "1 Profiling System", included: true },
+      { text: "Basic Form Analysis", included: true },
+      { text: "Smart Protocol Builder", included: true },
+      { text: "Progress Analytics", included: true },
+      { text: "Concierge Access", included: false },
+      { text: "API Integration", included: false },
     ],
-    cta: "Get started free",
+    cta: "Begin Free Trial",
     featured: false,
   },
   {
-    badge: "Pro",
+    badge: "Athlete",
     name: "Studio",
-    desc: "Built for growing coaching businesses and small studios.",
+    desc: "Advanced tools for the serious physical pursuit.",
     monthly: 49,
     annual: 37,
     features: [
-      { text: "3 AI trainer profiles", included: true },
-      { text: "Unlimited clients", included: true },
-      { text: "Smart workout builder", included: true },
-      { text: "Advanced analytics", included: true },
-      { text: "Custom branding", included: true },
-      { text: "API access", included: false },
+      { text: "3 Profiling Systems", included: true },
+      { text: "Unlimited Form Analysis", included: true },
+      { text: "Smart Protocol Builder", included: true },
+      { text: "Advanced Analytics", included: true },
+      { text: "Concierge Access", included: true },
+      { text: "API Integration", included: false },
     ],
-    cta: "Start 14-day free trial",
+    cta: "Join Athlete Tier",
     featured: true,
     popular: true,
   },
   {
     badge: "Elite",
     name: "Scale",
-    desc: "For established platforms and multi-location gyms.",
+    desc: "The ultimate sanctuary for peak performance tracking.",
     monthly: 99,
     annual: 74,
     features: [
-      { text: "10 AI trainer profiles", included: true },
-      { text: "Unlimited clients", included: true },
-      { text: "Smart workout builder", included: true },
-      { text: "Full analytics suite", included: true },
-      { text: "Custom branding", included: true },
-      { text: "API access", included: true },
+      { text: "10 Profiling Systems", included: true },
+      { text: "Unlimited Form Analysis", included: true },
+      { text: "Smart Protocol Builder", included: true },
+      { text: "Full Analytics Suite", included: true },
+      { text: "Concierge Access", included: true },
+      { text: "API Integration", included: true },
     ],
-    cta: "Get started free",
+    cta: "Go Elite",
     featured: false,
   },
 ];
@@ -64,183 +67,154 @@ export default function PricingPage() {
   const [annual, setAnnual] = useState(false);
 
   return (
-    <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap');`}</style>
-      <div
-        className="min-h-screen bg-[#f8f7f4] flex flex-col"
-        style={{ fontFamily: "'DM Sans', sans-serif" }}
-      >
-        <Navbar />
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="min-h-screen bg-background flex flex-col"
+    >
+      <Navbar />
 
-        <main className="flex-1 px-4 sm:px-6 lg:px-8 pt-28 pb-20">
-          <div className="text-center mb-10 max-w-2xl mx-auto">
-            <span className="inline-flex items-center gap-2 bg-purple-50 border border-purple-100 rounded-full px-4 py-1.5 text-xs font-semibold text-purple-700 tracking-wide uppercase mb-4">
-              Pricing
-            </span>
-            <h1
-              className="text-5xl sm:text-6xl font-bold text-gray-900 leading-[1.05] mb-3"
-              style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.02em" }}
-            >
-              Train smarter,{" "}
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-purple-600 to-violet-500">
-                grow faster
-              </span>
-            </h1>
-            <p className="text-base sm:text-lg text-gray-500 leading-relaxed">
-              Simple, transparent pricing for every stage of your fitness journey.
-            </p>
-          </div>
+      <main className="flex-1 px-6 lg:px-8 pt-24 pb-20 max-w-7xl mx-auto w-full">
+        <div className="text-center mb-16 max-w-2xl mx-auto flex flex-col items-center">
+          <SectionLabel>Membership</SectionLabel>
+          <h1 className="text-[clamp(3rem,6vw,5rem)] font-display text-foreground leading-[1] tracking-tight mt-6 mb-6">
+            Choose your <br /> discipline.
+          </h1>
+          <p className="text-lg text-muted font-sans leading-relaxed">
+            Minimalist pricing structures for every stage of your physical refinement journey.
+          </p>
+        </div>
 
-          <div className="flex items-center justify-center gap-3 mb-10">
+        <div className="flex items-center justify-center gap-4 mb-16">
+          <span className={`text-[10px] font-bold uppercase tracking-[0.2em] transition-colors ${annual ? "text-muted" : "text-foreground"}`}>
+            Monthly
+          </span>
+          <button
+            type="button"
+            onClick={() => setAnnual((v) => !v)}
+            className={`relative w-14 h-7 border border-foreground transition-colors focus:outline-none ${
+              annual ? "bg-foreground" : "bg-transparent"
+            }`}
+            aria-label="Toggle billing period"
+            aria-pressed={annual}
+          >
             <span
-              className={`text-sm font-medium ${annual ? "text-gray-400" : "text-gray-900"}`}
-            >
-              Monthly
+              className={`absolute top-1 w-4 h-4 transition-all duration-300 ${annual ? "bg-background left-[34px]" : "bg-foreground left-1"}`}
+            />
+          </button>
+          <span className={`text-[10px] font-bold uppercase tracking-[0.2em] flex items-center gap-3 transition-colors ${annual ? "text-foreground" : "text-muted"}`}>
+            Annual
+            <span className="text-[8px] tracking-[0.2em] bg-foreground text-background px-2 py-1">
+              SAVE 25%
             </span>
-            <button
-              type="button"
-              onClick={() => setAnnual((v) => !v)}
-              className={`relative w-11 h-6 rounded-full transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 ${
-                annual ? "bg-purple-600" : "bg-gray-200"
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16">
+          {plans.map((plan, i) => (
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className={`relative rounded-none p-8 lg:p-10 flex flex-col border transition-all duration-300 ${
+                plan.featured
+                  ? "border-foreground bg-foreground text-background shadow-[0_24px_48px_rgba(0,0,0,0.1)] scale-[1.02] z-10"
+                  : "border-border bg-background text-foreground hover:border-foreground"
               }`}
-              aria-label="Toggle billing period"
-              aria-pressed={annual}
             >
-              <span
-                className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200"
-                style={{ left: annual ? "22px" : "4px" }}
-              />
-            </button>
-            <span
-              className={`text-sm font-medium flex items-center gap-2 ${annual ? "text-gray-900" : "text-gray-400"}`}
-            >
-              Annual
-              <span className="text-[10px] font-semibold uppercase tracking-wide text-purple-700 bg-purple-50 border border-purple-100 px-2 py-0.5 rounded-full">
-                Save 25%
-              </span>
-            </span>
-          </div>
+              {plan.popular && (
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[9px] font-bold uppercase tracking-[0.3em] px-4 py-1.5 border border-background bg-foreground text-background whitespace-nowrap">
+                  Most selected
+                </div>
+              )}
 
-          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 mb-6">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-2xl p-6 flex flex-col border transition-shadow ${
+              <span className={`inline-flex w-fit text-[9px] font-bold uppercase tracking-[0.3em] opacity-60 mb-6`}>
+                {plan.badge}
+              </span>
+
+              <p className="text-xl font-bold font-sans uppercase tracking-widest mb-2">
+                {plan.name}
+              </p>
+              <p className={`text-sm leading-relaxed mb-8 ${plan.featured ? "text-background/80" : "text-muted"}`}>
+                {plan.desc}
+              </p>
+
+              <div className="flex items-baseline gap-1 mb-2">
+                <span className={`text-2xl font-mono font-bold ${plan.featured ? "text-background/80" : "text-muted"}`}>$</span>
+                <span className="text-6xl font-mono font-bold tracking-tighter">
+                  {annual ? plan.annual : plan.monthly}
+                </span>
+                <span className={`text-sm ${plan.featured ? "text-background/80" : "text-muted"}`}>/mo</span>
+              </div>
+              <p className={`text-[10px] font-bold uppercase tracking-widest mb-8 ${plan.featured ? "text-background/60" : "text-muted/60"}`}>
+                {annual ? `Billed $${plan.annual * 12} yearly` : "Billed monthly"}
+              </p>
+
+              <hr className={`border-t mb-8 ${plan.featured ? "border-background/20" : "border-border"}`} />
+
+              <ul className="space-y-4 mb-10 flex-1">
+                {plan.features.map((f) => (
+                  <li key={f.text} className="flex items-start gap-4">
+                    {f.included ? (
+                      <span className={`mt-0.5 w-4 h-4 flex items-center justify-center shrink-0 ${plan.featured ? "text-background" : "text-foreground"}`}>
+                        <Check className="w-4 h-4" strokeWidth={2.5} />
+                      </span>
+                    ) : (
+                      <span className={`mt-0.5 w-4 h-4 flex items-center justify-center shrink-0 ${plan.featured ? "text-background/30" : "text-muted/30"}`}>
+                        <Minus className="w-4 h-4" strokeWidth={2} />
+                      </span>
+                    )}
+                    <span
+                      className={`text-sm font-sans leading-snug ${
+                        f.included
+                          ? (plan.featured ? "text-background" : "text-foreground")
+                          : (plan.featured ? "text-background/50" : "text-muted")
+                      }`}
+                    >
+                      {f.text}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/register"
+                className={`w-full text-center py-4 text-[10px] uppercase tracking-[0.3em] font-bold transition-all ${
                   plan.featured
-                    ? "border-purple-200 bg-linear-to-b from-purple-50/80 to-white shadow-[0_4px_24px_rgba(139,92,246,0.15)] sm:scale-[1.02]"
-                    : "border-gray-200 bg-white hover:border-purple-100"
+                    ? "bg-background text-foreground hover:bg-neutral-200"
+                    : "bg-foreground text-background hover:bg-neutral-800"
                 }`}
               >
-                {plan.popular && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-semibold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-600 text-white whitespace-nowrap shadow-md">
-                    Most popular
-                  </div>
-                )}
+                {plan.cta}
+              </Link>
+            </motion.div>
+          ))}
+        </div>
 
-                <span className="inline-flex w-fit text-[10px] font-semibold uppercase tracking-widest text-purple-700 bg-purple-50 border border-purple-100 px-2.5 py-1 rounded-full mb-3">
-                  {plan.badge}
-                </span>
-
-                <p
-                  className="text-2xl font-bold text-gray-900 mb-1"
-                  style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.03em" }}
-                >
-                  {plan.name}
-                </p>
-                <p className="text-sm text-gray-500 leading-relaxed mb-4">{plan.desc}</p>
-
-                <div className="flex items-baseline gap-1 mb-1">
-                  <span className="text-sm text-gray-500 self-start mt-1">$</span>
-                  <span
-                    className="text-4xl font-bold text-gray-900 tracking-tight"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-                  >
-                    {annual ? plan.annual : plan.monthly}
-                  </span>
-                  <span className="text-sm text-gray-500">/mo</span>
-                </div>
-                <p className="text-xs text-gray-400 mb-5">
-                  {annual ? `$${plan.annual * 12} billed annually` : "Billed monthly"}
-                </p>
-
-                <hr className="border-gray-100 mb-5" />
-
-                <ul className="space-y-2.5 mb-6 flex-1">
-                  {plan.features.map((f) => (
-                    <li key={f.text} className="flex items-start gap-2.5">
-                      {f.included ? (
-                        <span className="mt-0.5 w-5 h-5 rounded-full bg-purple-100 flex items-center justify-center shrink-0">
-                          <Check className="w-3 h-3 text-purple-600" strokeWidth={2.5} />
-                        </span>
-                      ) : (
-                        <span className="mt-0.5 w-5 h-5 rounded-full bg-gray-100 flex items-center justify-center shrink-0">
-                          <Minus className="w-3 h-3 text-gray-400" strokeWidth={2} />
-                        </span>
-                      )}
-                      <span
-                        className={`text-sm leading-snug ${f.included ? "text-gray-700" : "text-gray-400"}`}
-                      >
-                        {f.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                <Link
-                  href="/register"
-                  className={`w-full text-center py-3 rounded-xl text-sm font-semibold transition-all ${
-                    plan.featured
-                      ? "bg-purple-600 hover:bg-purple-700 text-white shadow-[0_4px_24px_rgba(139,92,246,0.35)] hover:shadow-[0_4px_32px_rgba(139,92,246,0.45)]"
-                      : "bg-white text-gray-800 border border-gray-200 hover:bg-gray-50 hover:border-purple-200"
-                  }`}
-                >
-                  {plan.cta}
-                </Link>
-              </div>
-            ))}
-          </div>
-
-          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 rounded-2xl border border-gray-200 bg-white px-6 py-5">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-gray-400 mb-1">
-                Enterprise
-              </p>
-              <p
-                className="text-xl font-bold text-gray-900 mb-1"
-                style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.03em" }}
-              >
-                Custom plan
-              </p>
-              <p className="text-sm text-gray-500">
-                Unlimited profiles, white-label, SLA &amp; dedicated support.
-              </p>
-            </div>
-            <Link
-              href="/register"
-              className="shrink-0 inline-flex justify-center text-sm font-semibold px-6 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 hover:border-purple-200 transition-colors"
-            >
-              Talk to sales
-            </Link>
-          </div>
-
-          <div className="text-center mt-10 space-y-2 max-w-lg mx-auto">
-            <p className="text-sm text-gray-500">
-              All plans include a 14-day free trial. No credit card required.
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 border border-border bg-background px-8 py-8">
+          <div>
+            <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-muted mb-2">
+              Enterprise Integration
             </p>
-            <p className="text-sm text-gray-500">
-              Questions?{" "}
-              <a href="#" className="text-purple-600 hover:text-purple-700 font-medium">
-                Read our FAQ
-              </a>{" "}
-              or{" "}
-              <a href="#" className="text-purple-600 hover:text-purple-700 font-medium">
-                chat with us
-              </a>
-              .
+            <p className="text-xl font-display text-foreground mb-2">
+              Bespoke Architecture
+            </p>
+            <p className="text-sm text-muted font-sans tracking-wide">
+              Unlimited structural profiles, complete white-label aesthetic, & dedicated system support.
             </p>
           </div>
-        </main>
-      </div>
-    </>
+          <Link
+            href="/register"
+            className="shrink-0 inline-flex justify-center text-[10px] uppercase font-bold tracking-[0.2em] px-8 py-4 border border-foreground bg-transparent text-foreground hover:bg-foreground hover:text-background transition-colors"
+          >
+            Consult Strategy
+          </Link>
+        </div>
+
+      </main>
+      <Footer />
+    </motion.div>
   );
 }
