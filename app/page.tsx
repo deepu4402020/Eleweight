@@ -349,6 +349,7 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               <TeaserCard
                 title="Bespoke Nutrition"
+                description="Macro-aligned meal strategies tailored to your metabolic profile and training intensity. No guesswork, just performance."
                 label="Fuel Protocol"
                 link="/diet-plans"
                 icon={Utensils}
